@@ -8,8 +8,32 @@ actions:
         dataset: output/dataset.csv.gz
 
   generate_report:
-      run: python:v2 python analysis/report.py
-      needs: [generate_dataset]
-      outputs:
-        moderately_sensitive:
-          chart: output/report.png
+    run: r:v2 analysis/report.R
+    needs: [generate_dataset]
+    outputs:
+      moderately_sensitive:
+        chart: output/report.png
+  generate_status:
+    run: r:v2 analysis/status.R
+    needs: [generate_dataset]
+    outputs:
+      moderately_sensitive:
+        chart: output/status.csv    
+  generate_demographics:
+    run: r:v2 analysis/demographics.R
+    needs: [generate_status]
+    outputs:
+      moderately_sensitive:
+        plot1: output/sex_distribution.png
+        plot2: output/vaccination_status_distribution.png
+        plot3: output/age_distribution.png
+        plot4: output/age_by_vaccination.png
+        plot5: output/vaccination_dates_distribution.png
+        plot6: output/sex_vs_vaccination.png
+        plot7: output/age_group_vs_vaccination.png
+  test_ml_model:
+    run: r:v2 analysis/ml.R
+    needs: [generate_status]
+    outputs:
+      moderately_sensitive:
+        plot: output/predicted_prob_plot.png
