@@ -317,16 +317,3 @@ text(0.75, 0.4, sprintf("Hospital Admissions\n%d (%.1f%%)", stats$admitted,
 
 text(0.5, 0.1, format(Sys.Date(), "Generated: %B %d, %Y"), cex = 1.2, col = "gray50")
 dev.off()
-
-cat("\n=== All visualizations generated successfully! ===\n")
-cat("Files created:\n")
-cat("1. dashboard_overview.png - Main survival dashboard\n")
-cat("2. age_distributions.png - Age distribution analysis\n")
-cat("3. mortality_heatmap.png - Mortality rate heatmap\n")
-cat("4. patient_flow.png - Patient journey flow\n")
-cat("5. risk_stratification.png - Risk stratification bubble plot\n")
-cat("6. age_violin_plot.png - Age distribution violin plots\n")
-cat("7. mortality_by_sex_age.png - Mortality trends by sex and age\n")
-cat("8. correlation_matrix.png - Variable correlation matrix\n")
-cat("9. survival_curve.png - Survival curve by vaccination\n")
-cat("10. summary_statistics.png - Key statistics summary panel\n")

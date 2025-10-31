@@ -309,15 +309,3 @@ dashboard <- grid.arrange(p_small1, p_small2, p_small3, p_small4,
                           top = "COVID-19 Patient Data Dashboard")
 
 ggsave("output/10_dashboard.png", dashboard, width = 12, height = 10, dpi = 300)
-
-cat("\n=== ALL VISUALIZATIONS SAVED ===\n")
-cat("1. 1_survival_by_age.png\n")
-cat("2. 2_alluvial_flow.png\n")
-cat("3. 3_patient_heatmap.png\n")
-cat("4. 4_age_distribution.png\n")
-cat("5. 5_mosaic_plot.png\n")
-cat("6. 6_forest_plot.png\n")
-cat("7. 7_multifactor_bars.png\n")
-cat("8. 8_predicted_probability.png\n")
-cat("9. 9_waffle_chart.png\n")
-cat("10. 10_dashboard.png\n")
