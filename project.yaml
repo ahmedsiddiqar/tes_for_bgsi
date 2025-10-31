@@ -37,3 +37,13 @@ actions:
     outputs:
       moderately_sensitive:
         plot: output/predicted_prob_plot.png
+
+  generate_viz:
+    run: r:v2 analysis/visualisasi.R
+    needs: [generate_status]
+    outputs:
+      moderately_sensitive:
+        plot: output/age_distribution_1.png
+        plot1: output/sex_vs_covid_admission.png
+        plot3: output/age_vs_covid_admission.png
+        plot4: output/vaccination_vs_covid_admission.png

@@ -20,7 +20,10 @@ has_registration = (
   
 # Define study population  
 dataset.define_population(has_registration)  
-dataset.configure_dummy_data(population_size=1000)  
+dataset.configure_dummy_data(  
+    population_size=2500,  
+    additional_population_constraint=patients.sex.is_in(['male', 'female', 'intersex'])  
+)
   
 # Define index date for age calculation (e.g., last day of study period)  
 index_date = end_date  
