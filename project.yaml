@@ -43,7 +43,31 @@ actions:
     needs: [generate_status]
     outputs:
       moderately_sensitive:
-        plot: output/age_distribution_1.png
-        plot1: output/sex_vs_covid_admission.png
-        plot3: output/age_vs_covid_admission.png
-        plot4: output/vaccination_vs_covid_admission.png
+        plot: output/1_survival_by_age.png
+        plot1: output/2_alluvial_flow.png
+        plot2: output/3_patient_heatmap.png
+        plot3: output/4_age_distribution.png
+        plot4: output/5_mosaic_plot.png
+        plot5: output/6_forest_plot.png
+        plot6: output/7_multifactor_bars.png
+        plot7: output/8_predicted_probability.png
+        plot8: output/9_waffle_chart.png
+        plot9: output/10_dashboard.png
+
+  generate_viz2:
+    run: r:v2 analysis/viz2.R
+    needs: [generate_status]
+    outputs:
+      moderately_sensitive:
+        plot: output/11_new_dashboard.png
+        plot1: output/12_dashboard_age.png
+        plot2: output/13_mortality_heatmap.png
+        plot3: output/14_patient_flow.png
+        plot4: output/15_risk_stratification.png
+        plot5: output/16_age_violin_plot.png
+        plot6: output/17_mortality_by_sex_age.png
+        plot7: output/18_correlation_matrix.png
+        plot8: output/19_survival_curve.png
+        plot9: output/20_summary_statistics.png
+
+

@@ -1,5 +1,5 @@
-from ehrql import create_dataset  
-from ehrql.tables.tpp import patients, practice_registrations, vaccinations, apcs  
+from ehrql import create_dataset 
+from ehrql.tables.tpp import patients, practice_registrations, vaccinations, apcs, ons_deaths
 from ehrql import codelist_from_csv  
 
 
@@ -7,8 +7,8 @@ from ehrql import codelist_from_csv
 dataset = create_dataset()  
   
 # Define a date range for inclusion  
-start_date = "2020-01-01"  
-end_date = "2021-03-31"  
+start_date = "2019-01-01"  
+end_date = "2022-03-31"  
   
 # Identify patients who had an active registration anytime in this period  
 has_registration = (  
@@ -22,8 +22,9 @@ has_registration = (
 dataset.define_population(has_registration)  
 dataset.configure_dummy_data(  
     population_size=2500,  
-    additional_population_constraint=patients.sex.is_in(['male', 'female', 'intersex'])  
-)
+    additional_population_constraint = (
+    patients.sex.is_in(["male", "female", "intersex"])
+))
   
 # Define index date for age calculation (e.g., last day of study period)  
 index_date = end_date  
@@ -39,7 +40,8 @@ latest_vaccine = (
     .sort_by(vaccinations.date)  
     .last_for_patient()  
 )  
-dataset.latest_covid_vaccine_date = latest_vaccine.date
+dataset.has_covid_vaccine = latest_vaccine.exists_for_patient()
+
 
 # Load COVID ICD-10 codelist  
 covid_icd10_codes = codelist_from_csv("codelists/opensafely-covid-identification.csv", column="icd10_code")  
@@ -50,4 +52,9 @@ covid_admissions = apcs.where(
 )  
   
 # Add COVID admission variables  
-dataset.has_covid_admission = covid_admissions.exists_for_patient()  
+dataset.has_covid_admission = covid_admissions.exists_for_patient() 
+dataset.underlying_cause_death = ons_deaths.underlying_cause_of_death.is_in(covid_icd10_codes)
+from ehrql import when
+
+dataset.status = when(dataset.underlying_cause_death).then("dead").otherwise("alive")
+

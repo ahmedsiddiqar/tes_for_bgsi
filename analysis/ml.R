@@ -2,30 +2,29 @@ library(tidyverse)
 library(broom)
 
 # --- Load dataset ---
-df <- read_csv("output/status.csv", col_types = cols(
+df <- read_csv("output/dataset.csv", col_types = cols(
   patient_id = col_integer(),
   sex = col_character(),
   age = col_double(),
-  vaccination_status = col_character(),
-  has_covid_admission = col_logical()
+  has_covid_vaccine = col_character(),
+  has_covid_admission = col_logical(),
+  status =  col_character()
 ))
 
 # --- Prepare outcome and predictors ---
-df <- df %>%
+data <- df %>%
   mutate(
-    outcome = as.integer(has_covid_admission),
-    sex = factor(sex),
-    vaccination_status = factor(vaccination_status, 
-                                levels = c("Not Vaccinated", "Vaccinated"))
-  ) %>%
-  drop_na(outcome, age, sex, vaccination_status)
+    has_covid_vaccine = ifelse(has_covid_vaccine == "T", 1, 0),
+    has_covid_admission = ifelse(has_covid_admission == "T", 1, 0),
+    underlying_cause_death = ifelse(underlying_cause_death == "T", 1, 0),
+    status_binary = ifelse(status == "dead", 1, 0),
+    sex = as.factor(sex)
+  )
 
 # --- Fit logistic regression ---
-model <- glm(
-  outcome ~ age + sex + vaccination_status,
-  family = binomial(link = "logit"),
-  data = df
-)
+model <- glm(status_binary ~ sex + age + has_covid_vaccine,
+             data = data,
+             family = binomial(link = "logit"))
 
 # --- Add predicted probabilities ---
 df <- df %>%
@@ -37,12 +36,12 @@ df <- df %>%
 print(head(df))
 
 # --- Plot predicted probabilities ---
-plot <- ggplot(df, aes(x = age, y = predicted_prob, color = vaccination_status)) +
+plot <- ggplot(df, aes(x = age, y = predicted_prob, color = has_covid_vaccine)) +
   geom_point(alpha = 0.3) +
   geom_smooth(method = "loess") +
   facet_wrap(~sex) +
   labs(
-    title = "Predicted Probability of COVID Infection",
+    title = "Predicted Probability of COVID death",
     x = "Age",
     y = "Predicted Probability",
     color = "Vaccination Status"
