@@ -21,7 +21,7 @@ has_registration = (
 # Define study population  
 dataset.define_population(has_registration)  
 dataset.configure_dummy_data(  
-    population_size=2500,  
+    population_size=3000,  
     additional_population_constraint = (
     patients.sex.is_in(["male", "female", "intersex"])
 ))

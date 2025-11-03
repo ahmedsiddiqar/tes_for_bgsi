@@ -1,5 +1,11 @@
 {
   "files": {
+    "primis-covid19-vacc-uptake-covrx.csv": {
+      "id": "primis-covid19-vacc-uptake/covrx/v1.5.3",
+      "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/covrx/v1.5.3/",
+      "downloaded_at": "2025-11-03 02:28:57.604249Z",
+      "sha": "594a0a6ce897c545b98fdf6a5669760cc441af28"
+    },
     "opensafely-covid-identification.csv": {
       "id": "opensafely/covid-identification/2020-06-03",
       "url": "https://www.opencodelists.org/codelist/opensafely/covid-identification/2020-06-03/",
